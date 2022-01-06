@@ -18,6 +18,12 @@ class Citas{
         this.citas = [];
     }
 
+    agregarCitas(cita){
+            this.citas = [...this.citas,cita];
+
+            console.log(this.citas);
+    }
+
 }
 
 class UI {
@@ -81,7 +87,7 @@ function datosCita(e){
 
     citasOBJ[e.target.name] = e.target.value;
 
-    console.log(citasOBJ);
+    
 }
 
 
@@ -95,4 +101,27 @@ function nuevaCita(e){
 
             return;
         }
+
+        //generar un id unico 
+        citasOBJ.id = Date.now();
+
+        administrarCita.agregarCitas({...citasOBJ});
+
+        //reiniciar el objeto
+        reiniciarObjeto();
+
+
+        //reiniciar el formulario
+        formulario.reset();
+
+        //mostrar el html
+}
+
+function reiniciarObjeto() {
+       citasOBJ.mascota='';
+        citasOBJ.propietario='';
+        citasOBJ.telefono='';
+        citasOBJ.fecha='';
+        citasOBJ.hora='';
+        citasOBJ.sintomas='';
 }
