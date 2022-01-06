@@ -23,6 +23,9 @@ class Citas{
 
             
     }
+    eliminarCita(id){
+            this.citas = this.citas.filter(cita => cita.id !== id);
+    }
 
 }
 
@@ -49,7 +52,7 @@ class UI {
     }
 
     imprimirCitas({citas}){
-        limpiarHtml();
+        this.limpiarHtml();
             citas.forEach(cita => {
                     const {mascota,propietario,telefono,fecha,hora,sintomas,id} = cita;
 
@@ -92,6 +95,13 @@ class UI {
                         <span class="font-weight-bolder">Sintomas: </span> ${sintomas}
                         `;
 
+                        //boton para eliminar las citas
+                        const btnEliminar = document.createElement('button');
+                        btnEliminar.classList.add('btn','btn-danger','mr-2');
+                        btnEliminar.innerHTML = 'Eliminar <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>';
+
+                        btnEliminar.onclick = () => eliminarCita(id);
+
                     //agregar los parrafos  al div citas
                     dvCitas.appendChild(mascotaParrafo);
                     dvCitas.appendChild(propietarioParrafo);
@@ -99,6 +109,7 @@ class UI {
                     dvCitas.appendChild(fechaParrafo);
                      dvCitas.appendChild(horaParrafo);
                     dvCitas.appendChild(sintomasParrafo);
+                    dvCitas.appendChild(btnEliminar);
 
                     //agregar citas al html
 
@@ -190,4 +201,17 @@ function reiniciarObjeto() {
         citasOBJ.fecha='';
         citasOBJ.hora='';
         citasOBJ.sintomas='';
+}
+function eliminarCita(id) {
+    //eliiminar citas
+
+        administrarCita.eliminarCita(id);
+
+
+    //mostrar mensaje
+
+         ui.imprimirAlerta('Cita Eliminada Correctamente','success');
+
+    //refrescar campos 
+             ui.imprimirCitas(administrarCita);
 }
