@@ -21,7 +21,7 @@ class Citas{
     agregarCitas(cita){
             this.citas = [...this.citas,cita];
 
-            console.log(this.citas);
+            
     }
 
 }
@@ -46,6 +46,70 @@ class UI {
                 divMensaje.remove();
         }, 3000);
 
+    }
+
+    imprimirCitas({citas}){
+        limpiarHtml();
+            citas.forEach(cita => {
+                    const {mascota,propietario,telefono,fecha,hora,sintomas,id} = cita;
+
+                    const dvCitas = document.createElement('div');
+                    dvCitas.classList.add('cita','p-3');
+                    dvCitas.dataset.id = id;
+
+                    //scripting de los elementos de la cita 
+                    const mascotaParrafo = document.createElement('h2');
+                    mascotaParrafo.classList.add('card-title','font-weight-bolder');
+                    mascotaParrafo.textContent = mascota;
+
+                    const propietarioParrafo = document.createElement('p');
+                    propietarioParrafo.innerHTML= `
+                    
+                        <span class="font-weight-bolder"> Propitario: </span> ${propietario}
+                    `;
+
+                     const telefonoParrafo = document.createElement('p');
+                    telefonoParrafo.innerHTML= `
+                    
+                        <span class="font-weight-bolder"> Telefono: </span> ${telefono}
+                    `;
+                    
+                     const fechaParrafo = document.createElement('p');
+                    fechaParrafo.innerHTML= `
+                    
+                        <span class="font-weight-bolder">Fecha: </span> ${fecha}
+                    `;
+
+                     const horaParrafo = document.createElement('p');
+                    horaParrafo.innerHTML= `
+                    
+                        <span class="font-weight-bolder">Hora: </span> ${hora}
+                    `;
+
+                     const sintomasParrafo = document.createElement('p');
+                    sintomasParrafo.innerHTML= `
+                    
+                        <span class="font-weight-bolder">Sintomas: </span> ${sintomas}
+                        `;
+
+                    //agregar los parrafos  al div citas
+                    dvCitas.appendChild(mascotaParrafo);
+                    dvCitas.appendChild(propietarioParrafo);
+                     dvCitas.appendChild(telefonoParrafo);
+                    dvCitas.appendChild(fechaParrafo);
+                     dvCitas.appendChild(horaParrafo);
+                    dvCitas.appendChild(sintomasParrafo);
+
+                    //agregar citas al html
+
+                    listarCitas.appendChild(dvCitas);
+            });
+    }
+
+    limpiarHtml(){
+        while (listarCitas.firstChild) {
+                listarCitas.removeChild(listarCitas.firstChild);
+        }
     }
 
 }
@@ -115,6 +179,8 @@ function nuevaCita(e){
         formulario.reset();
 
         //mostrar el html
+
+        ui.imprimirCitas(administrarCita);
 }
 
 function reiniciarObjeto() {
